@@ -22,11 +22,11 @@ test.describe('Draggable Page: Container Restricted', () => {
 			force: true,
 		});
 
-		const DragabbleBox = await dragabblePage.getDragabbleBoundingBox();
+		const dragabbleBox = await dragabblePage.getDragabbleBoundingBox();
 
-		console.log(DragabbleBox);
+		console.log(dragabbleBox);
 
-		expect(DragabbleBox!.x).toBeGreaterThanOrEqual(сontainmentWrapperBox!.x);
+		expect(dragabbleBox!.x).toBeGreaterThanOrEqual(сontainmentWrapperBox!.x);
 	});
 
 	test('Boundary TOP: should rest against the top edge and not extend beyond it', async ({
@@ -42,9 +42,9 @@ test.describe('Draggable Page: Container Restricted', () => {
 			force: true,
 		});
 
-		const DragabbleBox = await dragabblePage.getDragabbleBoundingBox();
+		const dragabbleBox = await dragabblePage.getDragabbleBoundingBox();
 
-		expect(DragabbleBox!.x).toBeGreaterThanOrEqual(сontainmentWrapperBox!.x);
+		expect(dragabbleBox!.y).toBeGreaterThanOrEqual(сontainmentWrapperBox!.y);
 	});
 
 	test('Boundary RIGHT: should rest against the right edge', async ({
@@ -60,16 +60,17 @@ test.describe('Draggable Page: Container Restricted', () => {
 			force: true,
 		});
 
-		const DragabbleBox = await dragabblePage.getDragabbleBoundingBox();
+		const dragabbleBox = await dragabblePage.getDragabbleBoundingBox();
+		const boxRightEdge = dragabbleBox!.x + dragabbleBox!.width;
+		const containerRightEdge = сontainmentWrapperBox!.x + сontainmentWrapperBox!.width;
 
-		expect(DragabbleBox!.x).toBeGreaterThanOrEqual(сontainmentWrapperBox!.x);
+		expect(boxRightEdge).toBeLessThanOrEqual(containerRightEdge);
 	});
 
 	test('Boundary BOTTOM: should rest against the bottom edge', async ({
 		dragabblePage,
 	}) => {
-		const сontainmentWrapperBox =
-			await dragabblePage.getContainmentWrapperBoundingBox();
+		const сontainmentWrapperBox = await dragabblePage.getContainmentWrapperBoundingBox();
 
 		await expect(dragabblePage.dragabble).toHaveClass(/ui-draggable-handle/);
 
@@ -78,8 +79,10 @@ test.describe('Draggable Page: Container Restricted', () => {
 			force: true,
 		});
 
-		const DragabbleBox = await dragabblePage.getDragabbleBoundingBox();
+		const dragabbleBox = await dragabblePage.getDragabbleBoundingBox();
+		const boxBottomEdge = dragabbleBox!.y + dragabbleBox!.height;
+		const containerBottomEdge = сontainmentWrapperBox!.y + сontainmentWrapperBox!.height;
 
-		expect(DragabbleBox!.x).toBeGreaterThanOrEqual(сontainmentWrapperBox!.x);
+		expect(boxBottomEdge).toBeLessThanOrEqual(containerBottomEdge);
 	});
 });
